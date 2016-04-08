@@ -1,23 +1,26 @@
 package io.advantageous.reakt.guava;
 
-import com.google.common.util.concurrent.*;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
 import io.advantageous.reakt.Callback;
 
 /**
  * Bridge for Guava to Reakt.
- *
+ * <p>
  * A Reakt promise is a Callback so this utility
  * works for both Callbacks and Promises.
- *
+ * <p>
  * You are more likely to use it with Promises.
  */
 public class Guava {
 
     /**
      * Register a promise with a Guava future.
-     * @param future guava future
+     *
+     * @param future   guava future
      * @param callback reakt callback
-     * @param <T> type of result.
+     * @param <T>      type of result.
      */
     public static <T> void register(final ListenableFuture<T> future,
                                     final Callback<T> callback) {
@@ -27,9 +30,10 @@ public class Guava {
 
     /**
      * Register a callback/promise with a Guava future.
-     * @param future guava future
+     *
+     * @param future   guava future
      * @param callback reakt callback
-     * @param <T> type of result.
+     * @param <T>      type of result.
      */
     public static <T> void registerCallback(final ListenableFuture<T> future,
                                             final Callback<T> callback) {

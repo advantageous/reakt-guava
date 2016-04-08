@@ -1,8 +1,11 @@
 package io.advantageous.reakt.guava;
 
-import com.google.common.util.concurrent.*;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListeningExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
 import io.advantageous.reakt.Ref;
 import io.advantageous.reakt.promise.Promise;
+import io.advantageous.reakt.promise.Promises;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +14,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static io.advantageous.reakt.guava.Guava.*;
+import static io.advantageous.reakt.guava.Guava.register;
 import static org.junit.Assert.*;
 
 public class GuavaTest {
@@ -57,7 +60,7 @@ public class GuavaTest {
     @Test
     public void testRegisterCallback() throws Exception {
 
-        Promise<String> promise = Promise.blockingPromise();
+        Promise<String> promise = Promises.blockingPromise();
         promise.thenRef(ref -> atomicRef.set(ref));
         register(future, promise);
 
@@ -71,7 +74,7 @@ public class GuavaTest {
     @Test
     public void testErrorWithCallBack() throws Exception {
 
-        Promise<String> promise = Promise.blockingPromise();
+        Promise<String> promise = Promises.blockingPromise();
         promise
                 .thenRef(ref -> atomicRef.set(ref))
                 .catchError(throwable -> atomicError.set(throwable));
