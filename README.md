@@ -33,3 +33,5 @@ register(session.executeAsync("SELECT release_version FROM system.local"),
 
 You can also use replay promises, all promises, any promises, and other
 features of Reakt to simplify async, reactive Java development.
+
+Reakt gets used by [QBit](http://advantageous.github.io/qbit/), and Conekt.
