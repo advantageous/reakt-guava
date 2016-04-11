@@ -44,7 +44,7 @@ public class Guava {
             }
 
             public void onFailure(Throwable thrown) {
-                callback.fail(thrown);
+                callback.reject(thrown);
             }
         });
     }
