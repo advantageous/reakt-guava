@@ -3,7 +3,7 @@ package io.advantageous.reakt.guava;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
-import io.advantageous.reakt.Ref;
+import io.advantageous.reakt.Expected;
 import io.advantageous.reakt.promise.Promise;
 import io.advantageous.reakt.promise.Promises;
 import org.junit.After;
@@ -22,7 +22,7 @@ public class GuavaTest {
 
     private ListeningExecutorService executor;
     private ListenableFuture<String> future;
-    private AtomicReference<Ref<String>> atomicRef;
+    private AtomicReference<Expected<String>> atomicRef;
     private AtomicReference<Throwable> atomicError;
     private ListenableFuture<String> errorFuture;
 
@@ -61,13 +61,13 @@ public class GuavaTest {
     public void testRegisterCallback() throws Exception {
 
         Promise<String> promise = Promises.blockingPromise();
-        promise.thenRef(ref -> atomicRef.set(ref));
+        promise.thenExpect(ref -> atomicRef.set(ref));
         register(future, promise);
 
         assertTrue(promise.complete());
         assertTrue(promise.success());
         assertNotNull(atomicRef.get());
-        assertTrue(promise.getRef().isPresent());
+        assertTrue(promise.expect().isPresent());
     }
 
 
@@ -76,7 +76,7 @@ public class GuavaTest {
 
         Promise<String> promise = Promises.blockingPromise();
         promise
-                .thenRef(ref -> atomicRef.set(ref))
+                .thenExpect(ref -> atomicRef.set(ref))
                 .catchError(throwable -> atomicError.set(throwable));
         register(errorFuture, promise);
 
