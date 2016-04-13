@@ -45,3 +45,4 @@ Reakt gets used by [QBit](http://advantageous.github.io/qbit/), and Conekt.
 * [QBit Extensions](https://github.com/advantageous/qbit-extensions)
 * [Czar Maker Consul](http://advantageous.github.io/czar-maker-consul/)
 * [Czar Maker](http://advantageous.github.io/czar-maker/)
+* [Reactive Microservices](http://www.mammatustech.com/reactive-microservices)
