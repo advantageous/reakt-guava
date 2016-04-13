@@ -1,42 +1,37 @@
-<!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
-  <link rel="stylesheet" href="stylesheets/github-dark.css">
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/script.js"></script>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Reakt Guava Bridge : Bridge between Reakt and Guava Futures">
 
-  <title>Reakt Guava Bridge</title>
-  <meta name="description" content="Bridge between Reakt and Guava Futures">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Reakt Guava Bridge</title>
+  </head>
 
-</head>
+  <body>
 
-<body>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/advantageous/reakt-guava">View on GitHub</a>
 
-  <div class="wrapper">
-    <header>
-      <h1 class="title">Reakt Guava Bridge</h1>
-    </header>
-    <div id="container">
-      <p class="tagline">Bridge between Reakt and Guava Futures</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/advantageous/reakt-guava/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/advantageous/reakt-guava/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/advantageous/reakt-guava" class="code">View Reakt Guava Bridge on GitHub</a>
-        </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
-        <article class="markdown-body">
-          <h2>
+          <h1 id="project_title">Reakt Guava Bridge</h1>
+          <h2 id="project_tagline">Bridge between Reakt and Guava Futures</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/advantageous/reakt-guava/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/advantageous/reakt-guava/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>
 <a id="reakt-to-guava-bridge" class="anchor" href="#reakt-to-guava-bridge" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reakt to Guava Bridge</h2>
 
 <p>Guava gets used by many libraries for its async support.
@@ -55,9 +50,9 @@ and other libs that use <a href="https://github.com/google/guava">Guava</a>.</p>
 
 <div class="highlight highlight-source-java"><pre>
 register(session<span class="pl-k">.</span>executeAsync(<span class="pl-s"><span class="pl-pds">"</span>SELECT release_version FROM system.local<span class="pl-pds">"</span></span>), 
-  promise()<span class="pl-k">.</span>thenRef(ref <span class="pl-k">-</span><span class="pl-k">&gt;</span> 
+  promise()<span class="pl-k">.</span>thenExpect(expected <span class="pl-k">-</span><span class="pl-k">&gt;</span> 
      gui<span class="pl-k">.</span>setMessage(<span class="pl-s"><span class="pl-pds">"</span>Cassandra version is <span class="pl-pds">"</span></span> <span class="pl-k">+</span>
-         ref<span class="pl-k">.</span>get()<span class="pl-k">.</span>one()<span class="pl-k">.</span>getString(<span class="pl-s"><span class="pl-pds">"</span>release_version<span class="pl-pds">"</span></span>))
+         expected<span class="pl-k">.</span>get()<span class="pl-k">.</span>one()<span class="pl-k">.</span>getString(<span class="pl-s"><span class="pl-pds">"</span>release_version<span class="pl-pds">"</span></span>))
   )<span class="pl-k">.</span>catchError(error <span class="pl-k">-</span><span class="pl-k">&gt;</span> 
      gui<span class="pl-k">.</span>setMessage(<span class="pl-s"><span class="pl-pds">"</span>Error while reading Cassandra version: <span class="pl-pds">"</span></span> 
      <span class="pl-k">+</span> error<span class="pl-k">.</span>getMessage())
@@ -69,26 +64,18 @@ register(session<span class="pl-k">.</span>executeAsync(<span class="pl-s"><span
 features of Reakt to simplify async, reactive Java development.</p>
 
 <p>Reakt gets used by <a href="http://advantageous.github.io/qbit/">QBit</a>, and Conekt.</p>
-        </article>
-      </div>
+      </section>
     </div>
-    <footer>
-      <div class="owner">
-      <p><a href="https://github.com/advantageous" class="avatar"><img src="https://avatars0.githubusercontent.com/u/8866947?v=3&amp;s=60" width="48" height="48"></a> <a href="https://github.com/advantageous">advantageous</a> maintains <a href="https://github.com/advantageous/reakt-guava">Reakt Guava Bridge</a></p>
 
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Reakt Guava Bridge maintained by <a href="https://github.com/advantageous">advantageous</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
 
-      </div>
-      <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
-    </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/advantageous/reakt-guava/tarball/master" class="tar">tar</a><a href="https://github.com/advantageous/reakt-guava/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
+    
 
-  
-</body>
+  </body>
 </html>
