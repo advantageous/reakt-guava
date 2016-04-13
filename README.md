@@ -22,7 +22,7 @@ and other libs that use [Guava](https://github.com/google/guava).
 ```java
 
 register(session.executeAsync("SELECT release_version FROM system.local"), 
-  promise().expect(expected -> 
+  promise().thenExpect(expected -> 
      gui.setMessage("Cassandra version is " +
          expected.get().one().getString("release_version"))
   ).catchError(error -> 
