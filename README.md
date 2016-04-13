@@ -22,9 +22,9 @@ and other libs that use [Guava](https://github.com/google/guava).
 ```java
 
 register(session.executeAsync("SELECT release_version FROM system.local"), 
-  promise().thenRef(ref -> 
+  promise().expect(expected -> 
      gui.setMessage("Cassandra version is " +
-         ref.get().one().getString("release_version"))
+         expected.get().one().getString("release_version"))
   ).catchError(error -> 
      gui.setMessage("Error while reading Cassandra version: " 
      + error.getMessage())
