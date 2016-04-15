@@ -33,6 +33,21 @@ register(session.executeAsync("SELECT release_version FROM system.local"),
      
 ```
 
+## Getting Started
+#### maven
+```xml
+<dependency>
+    <groupId>io.advantageous.reakt</groupId>
+    <artifactId>reakt-guava</artifactId>
+    <version>2.1.0.RELEASE</version>
+</dependency>
+```
+
+#### gradle
+```java
+compile 'io.advantageous.reakt:reakt-guava:2.1.0.RELEASE'
+```
+
 You can also use replay promises, all promises, any promises, and other
 features of Reakt to simplify async, reactive Java development.
 
@@ -43,6 +58,6 @@ Reakt gets used by [QBit](http://advantageous.github.io/qbit/), and Conekt.
 * [Reakt Reactive Java](http://advantageous.github.io/reakt)
 * [Reakt Guava Bridge](http://advantageous.github.io/reakt-guava/)
 * [QBit Extensions](https://github.com/advantageous/qbit-extensions)
-* [Czar Maker Consul](http://advantageous.github.io/czar-maker-consul/)
-* [Czar Maker](http://advantageous.github.io/czar-maker/)
+* [Elekt Consul](http://advantageous.github.io/elekt-consul/)
+* [Elekt](http://advantageous.github.io/elekt/)
 * [Reactive Microservices](http://www.mammatustech.com/reactive-microservices)
