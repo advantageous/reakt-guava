@@ -1,41 +1,33 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Reakt Guava Bridge : Bridge between Reakt and Guava Futures">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Reakt Guava Bridge</title>
+    <meta charset="UTF-8">
+    <title>Reakt Guava Bridge by advantageous</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
+    <section class="page-header">
+      <h1 class="project-name">Reakt Guava Bridge</h1>
+      <h2 class="project-tagline">Bridge between Reakt and Guava Futures</h2>
+      <a href="https://github.com/advantageous/reakt-guava" class="btn">View on GitHub</a>
+      <a href="https://github.com/advantageous/reakt-guava/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/advantageous/reakt-guava/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/advantageous/reakt-guava">View on GitHub</a>
-
-          <h1 id="project_title">Reakt Guava Bridge</h1>
-          <h2 id="project_tagline">Bridge between Reakt and Guava Futures</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/advantageous/reakt-guava/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/advantageous/reakt-guava/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h2>
+    <section class="main-content">
+      <h2>
 <a id="reakt-to-guava-bridge" class="anchor" href="#reakt-to-guava-bridge" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reakt to Guava Bridge</h2>
 
+<p><a href="http://advantageous.github.io/reakt-guava/">Reakt-Guava Website</a></p>
+
 <p>Guava gets used by many libraries for its async support.
-Many NoSQL drivers use Guava, e.g., Cassandra. <strong><em>Guava</em></strong> is JDK 1.6 backwards compatible. </p>
+Many NoSQL drivers use Guava, e.g., Cassandra. </p>
+
+<p><strong><em>Guava</em></strong> is JDK 1.6 backwards compatible. </p>
 
 <p><a href="http://advantageous.github.io/reakt/">Reakt</a> provides composable 
 promises that support lambda expressions, and a fluent API.</p>
@@ -49,21 +41,27 @@ and other libs that use <a href="https://github.com/google/guava">Guava</a>.</p>
 <a id="cassandra-reakt-example" class="anchor" href="#cassandra-reakt-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Cassandra Reakt example</h4>
 
 <div class="highlight highlight-source-java"><pre>
-register(session<span class="pl-k">.</span>executeAsync(<span class="pl-s"><span class="pl-pds">"</span>SELECT release_version FROM system.local<span class="pl-pds">"</span></span>), 
-  promise()<span class="pl-k">.</span>thenExpect(expected <span class="pl-k">-</span><span class="pl-k">&gt;</span> 
-     gui<span class="pl-k">.</span>setMessage(<span class="pl-s"><span class="pl-pds">"</span>Cassandra version is <span class="pl-pds">"</span></span> <span class="pl-k">+</span>
-         expected<span class="pl-k">.</span>get()<span class="pl-k">.</span>one()<span class="pl-k">.</span>getString(<span class="pl-s"><span class="pl-pds">"</span>release_version<span class="pl-pds">"</span></span>))
-  )<span class="pl-k">.</span>catchError(error <span class="pl-k">-</span><span class="pl-k">&gt;</span> 
-     gui<span class="pl-k">.</span>setMessage(<span class="pl-s"><span class="pl-pds">"</span>Error while reading Cassandra version: <span class="pl-pds">"</span></span> 
-     <span class="pl-k">+</span> error<span class="pl-k">.</span>getMessage())
-  )
-);
+    futureToPromise(session<span class="pl-k">.</span>executeAsync(insertInto(<span class="pl-s"><span class="pl-pds">"</span>Todo<span class="pl-pds">"</span></span>)
+            .value(<span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>, todo<span class="pl-k">.</span>getId())
+            .value(<span class="pl-s"><span class="pl-pds">"</span>createTime<span class="pl-pds">"</span></span>, todo<span class="pl-k">.</span>getCreateTime())
+            .value(<span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>, todo<span class="pl-k">.</span>getName())
+            .value(<span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span>, todo<span class="pl-k">.</span>getDescription()))
+    )<span class="pl-k">.</span>catchError(error <span class="pl-k">-</span><span class="pl-k">&gt;</span> {
+        serviceMgmt<span class="pl-k">.</span>increment(<span class="pl-s"><span class="pl-pds">"</span>add.todo.fail<span class="pl-pds">"</span></span>);
+        serviceMgmt<span class="pl-k">.</span>increment(<span class="pl-s"><span class="pl-pds">"</span>add.todo.fail.<span class="pl-pds">"</span></span> <span class="pl-k">+</span>
+                error<span class="pl-k">.</span>getClass()<span class="pl-k">.</span>getName()<span class="pl-k">.</span>toLowerCase());
+        recordCassandraError();
+        promise<span class="pl-k">.</span>reject(<span class="pl-s"><span class="pl-pds">"</span>unable to add todo<span class="pl-pds">"</span></span>, error);
+    })<span class="pl-k">.</span>then(resultSet <span class="pl-k">-</span><span class="pl-k">&gt;</span> {
+        <span class="pl-k">if</span> (resultSet<span class="pl-k">.</span>wasApplied()) {
+            promise<span class="pl-k">.</span>resolve(<span class="pl-c1">true</span>);
+            serviceMgmt<span class="pl-k">.</span>increment(<span class="pl-s"><span class="pl-pds">"</span>add.todo.success<span class="pl-pds">"</span></span>);
+        } <span class="pl-k">else</span> {
+            promise<span class="pl-k">.</span>resolve(<span class="pl-c1">false</span>);
+            serviceMgmt<span class="pl-k">.</span>increment(<span class="pl-s"><span class="pl-pds">"</span>add.todo.fail.not.added<span class="pl-pds">"</span></span>);
+        }
+    })<span class="pl-k">.</span>invokeWithReactor(reactor, <span class="pl-smi">Duration</span><span class="pl-k">.</span>ofSeconds(<span class="pl-c1">10</span>)))
 </pre></div>
-
-<p>You can also use replay promises, all promises, any promises, and other
-features of Reakt to simplify async, reactive Java development.</p>
-
-<p>Reakt gets used by <a href="http://advantageous.github.io/qbit/">QBit</a>, and Conekt.</p>
 
 <h2>
 <a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting Started</h2>
@@ -91,26 +89,23 @@ features of Reakt to simplify async, reactive Java development.</p>
 <a id="related-projects" class="anchor" href="#related-projects" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Related projects</h4>
 
 <ul>
-<li><a href="http://advantageous.github.io/reakt">Reakt Reactive Java</a></li>
 <li><a href="http://advantageous.github.io/qbit/">QBit Reactive Microservices</a></li>
+<li><a href="http://advantageous.github.io/reakt">Reakt Reactive Java</a></li>
 <li><a href="http://advantageous.github.io/reakt-guava/">Reakt Guava Bridge</a></li>
 <li><a href="https://github.com/advantageous/qbit-extensions">QBit Extensions</a></li>
 <li><a href="http://advantageous.github.io/elekt-consul/">Elekt Consul</a></li>
 <li><a href="http://advantageous.github.io/elekt/">Elekt</a></li>
 <li><a href="http://www.mammatustech.com/reactive-microservices">Reactive Microservices</a></li>
 </ul>
-      </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Reakt Guava Bridge maintained by <a href="https://github.com/advantageous">advantageous</a></p>
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/advantageous/reakt-guava">Reakt Guava Bridge</a> is maintained by <a href="https://github.com/advantageous">advantageous</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
-    </div>
 
-    
+    </section>
 
+  
   </body>
 </html>
