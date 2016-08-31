@@ -50,13 +50,13 @@ and other libs that use [Guava](https://github.com/google/guava).
 <dependency>
     <groupId>io.advantageous.reakt</groupId>
     <artifactId>reakt-guava</artifactId>
-    <version>2.1.0.RELEASE</version>
+    <version>3.0.0</version>
 </dependency>
 ```
 
 #### gradle
 ```java
-compile 'io.advantageous.reakt:reakt-guava:2.1.0.RELEASE'
+compile 'io.advantageous.reakt:reakt-guava:3.0.0'
 ```
 
 You can also use replay promises, all promises, any promises, and other
