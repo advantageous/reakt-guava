@@ -3,7 +3,9 @@ package io.advantageous.reakt.guava;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
-import io.advantageous.reakt.Callback;
+import io.advantageous.reakt.promise.Promise;
+import io.advantageous.reakt.promise.Promises;
+
 
 /**
  * Bridge for Guava to Reakt.
@@ -16,37 +18,21 @@ import io.advantageous.reakt.Callback;
 public class Guava {
 
     /**
-     * Register a promise with a Guava future.
-     *
-     * @param future   guava future
-     * @param callback reakt callback
-     * @param <T>      type of result.
+     * @param future guava future
+     * @param <T>    type of future
+     * @return Reakt promise
      */
-    public static <T> void register(final ListenableFuture<T> future,
-                                    final Callback<T> callback) {
-        registerCallback(future, callback);
-    }
+    public static <T> Promise<T> futureToPromise(final ListenableFuture<T> future) {
+        return Promises.invokablePromise(promise ->
+                Futures.addCallback(future, new FutureCallback<T>() {
+                    public void onSuccess(T result) {
+                        promise.reply(result);
+                    }
 
-
-    /**
-     * Register a callback/promise with a Guava future.
-     *
-     * @param future   guava future
-     * @param callback reakt callback
-     * @param <T>      type of result.
-     */
-    public static <T> void registerCallback(final ListenableFuture<T> future,
-                                            final Callback<T> callback) {
-
-        Futures.addCallback(future, new FutureCallback<T>() {
-            public void onSuccess(T result) {
-                callback.reply(result);
-            }
-
-            public void onFailure(Throwable thrown) {
-                callback.reject(thrown);
-            }
-        });
+                    public void onFailure(Throwable thrown) {
+                        promise.reject(thrown);
+                    }
+                }));
     }
 
 }

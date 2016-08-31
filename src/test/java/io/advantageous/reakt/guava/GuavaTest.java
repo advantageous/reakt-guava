@@ -14,7 +14,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static io.advantageous.reakt.guava.Guava.register;
 import static org.junit.Assert.*;
 
 public class GuavaTest {
@@ -58,11 +57,13 @@ public class GuavaTest {
     }
 
     @Test
-    public void testRegisterCallback() throws Exception {
+    public void testToFuturePromise() throws Exception {
 
         Promise<String> promise = Promises.blockingPromise();
         promise.thenExpect(ref -> atomicRef.set(ref));
-        register(future, promise);
+
+        Guava.futureToPromise(future)
+                .invokeWithPromise(promise);
 
         assertTrue(promise.complete());
         assertTrue(promise.success());
@@ -78,7 +79,9 @@ public class GuavaTest {
         promise
                 .thenExpect(ref -> atomicRef.set(ref))
                 .catchError(throwable -> atomicError.set(throwable));
-        register(errorFuture, promise);
+
+
+        Guava.futureToPromise(errorFuture).invokeWithPromise(promise);
 
         assertTrue(promise.complete());
         assertTrue(promise.failure());

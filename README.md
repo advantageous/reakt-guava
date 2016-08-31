@@ -21,15 +21,26 @@ and other libs that use [Guava](https://github.com/google/guava).
 
 ```java
 
-register(session.executeAsync("SELECT release_version FROM system.local"), 
-  promise().thenExpect(expected -> 
-     gui.setMessage("Cassandra version is " +
-         expected.get().one().getString("release_version"))
-  ).catchError(error -> 
-     gui.setMessage("Error while reading Cassandra version: " 
-     + error.getMessage())
-  )
-);
+    futureToPromise(session.executeAsync(insertInto("Todo")
+            .value("id", todo.getId())
+            .value("createTime", todo.getCreateTime())
+            .value("name", todo.getName())
+            .value("description", todo.getDescription()))
+    ).catchError(error -> {
+        serviceMgmt.increment("add.todo.fail");
+        serviceMgmt.increment("add.todo.fail." +
+                error.getClass().getName().toLowerCase());
+        recordCassandraError();
+        promise.reject("unable to add todo", error);
+    }).then(resultSet -> {
+        if (resultSet.wasApplied()) {
+            promise.resolve(true);
+            serviceMgmt.increment("add.todo.success");
+        } else {
+            promise.resolve(false);
+            serviceMgmt.increment("add.todo.fail.not.added");
+        }
+    }).invokeWithReactor(reactor, Duration.ofSeconds(10)))
      
 ```
 
