@@ -72,3 +72,4 @@ Reakt gets used by [QBit](http://advantageous.github.io/qbit/), and Conekt.
 * [Elekt Consul](http://advantageous.github.io/elekt-consul/)
 * [Elekt](http://advantageous.github.io/elekt/)
 * [Reactive Microservices](http://www.mammatustech.com/reactive-microservices)
+* [AWS Cassandra Support](http://cloudurable.com/subscription_support_benefits_cassandra/index.html)
